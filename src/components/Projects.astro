@@ -1,0 +1,61 @@
+---
+import { projects } from "../data/projects";
+import SectionHeading from "./SectionHeading.astro";
+---
+
+<section id="projects" class="relative mx-auto max-w-6xl px-6 py-24 sm:py-32">
+  <SectionHeading eyebrow="Selected work" title="Projects" />
+
+  <div class="grid gap-6 sm:grid-cols-2">
+    {
+      projects.map((p, i) => {
+        const Tag = p.link ? "a" : "div";
+        return (
+          <Tag
+            {...(p.link ? { href: p.link, target: "_blank", rel: "noopener noreferrer" } : {})}
+            class="group relative flex flex-col overflow-hidden rounded-2xl border border-line bg-surface/40 transition duration-300 hover:-translate-y-1 hover:border-accent/30 hover:bg-surface/70 hover:shadow-2xl hover:shadow-black/30"
+            data-reveal
+            style={`--reveal-delay:${i * 80}ms`}
+          >
+            {/* Product image */}
+            <div class="relative aspect-[16/9] overflow-hidden bg-primary">
+              <img
+                src={p.image}
+                alt={`${p.title} preview`}
+                loading="lazy"
+                decoding="async"
+                class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+              />
+              <div class="absolute inset-0 bg-[linear-gradient(to_top,var(--img-fade),transparent)]" />
+            </div>
+
+            <div class="flex flex-1 flex-col p-6">
+              <div class="flex items-start justify-between gap-3">
+                <h3 class="text-lg font-semibold text-mist">{p.title}</h3>
+                {p.link && (
+                  <span class="mt-1 shrink-0 text-haze transition group-hover:text-accent">
+                    <svg class="h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M7 17 17 7M8 7h9v9" />
+                    </svg>
+                  </span>
+                )}
+              </div>
+
+              <p class="mt-2 flex-1 text-sm leading-relaxed text-haze">
+                {p.description}
+              </p>
+
+              <ul class="mt-4 flex flex-wrap gap-2">
+                {p.tags.map((t) => (
+                  <li class="rounded-full bg-accent/10 px-2.5 py-1 text-xs font-medium text-accent ring-1 ring-inset ring-accent/20">
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Tag>
+        );
+      })
+    }
+  </div>
+</section>

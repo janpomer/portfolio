@@ -1,0 +1,63 @@
+---
+import { experiences } from "../data/experience";
+import SectionHeading from "./SectionHeading.astro";
+import Icon from "./Icon.astro";
+---
+
+<section id="experience" class="relative mx-auto max-w-6xl px-6 py-24 sm:py-32">
+  <SectionHeading eyebrow="Career" title="Work experience" />
+
+  <ol class="relative border-l border-line">
+    {
+      experiences.map((exp, i) => (
+        <li
+          class="group relative ml-6 pb-12 last:pb-0 sm:ml-10"
+          data-reveal
+          style={`--reveal-delay:${i * 80}ms`}
+        >
+          {/* Timeline node + icon */}
+          <span class="absolute -left-12 grid h-12 w-12 place-items-center rounded-xl bg-surface text-accent ring-1 ring-line transition group-hover:ring-accent/40 sm:-left-16">
+            <Icon name={exp.icon} class="h-6 w-6" />
+          </span>
+
+          <div class="rounded-2xl border border-line bg-surface/40 p-6 transition duration-300 group-hover:border-line group-hover:bg-surface/70 sm:p-7">
+            <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+              <h3 class="text-xl font-semibold text-mist">
+                {exp.link ? (
+                  <a
+                    href={exp.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="group/link inline-flex items-center gap-1.5 transition-colors hover:text-accent"
+                  >
+                    {exp.company}
+                    <svg class="h-4 w-4 text-haze transition group-hover/link:text-accent group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M7 17 17 7M8 7h9v9" />
+                    </svg>
+                  </a>
+                ) : (
+                  exp.company
+                )}
+              </h3>
+              <span class="rounded-full bg-veil px-3 py-1 text-xs font-medium text-haze">
+                {exp.from} — {exp.to}
+              </span>
+            </div>
+            <p class="mt-1 font-medium text-accent">{exp.position}</p>
+
+            <ul class="mt-4 space-y-2.5">
+              {exp.bullets.map((b) => (
+                <li class="flex gap-3 text-haze">
+                  <svg class="mt-1.5 h-3.5 w-3.5 shrink-0 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="m5 12 5 5L20 7" />
+                  </svg>
+                  <span class="leading-relaxed">{b}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</section>

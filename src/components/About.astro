@@ -1,0 +1,46 @@
+---
+import { about } from "../data/about";
+import SectionHeading from "./SectionHeading.astro";
+---
+
+<section id="about" class="relative mx-auto max-w-6xl px-6 py-24 sm:py-32">
+  <SectionHeading eyebrow="Who I am" title="About me" />
+
+  <div class="grid items-start gap-12 lg:grid-cols-5">
+    <!-- Bio -->
+    <div class="lg:col-span-3" data-reveal>
+      <div class="space-y-5 text-lg leading-relaxed text-haze">
+        {about.paragraphs.map((para) => <p>{para}</p>)}
+      </div>
+
+      <dl class="mt-10 grid grid-cols-2 gap-4">
+        {
+          about.stats.map((s) => (
+            <div class="rounded-2xl border border-line bg-surface/40 p-5 text-center">
+              <dt class="order-2 mt-1 text-xs font-medium text-haze">{s.label}</dt>
+              <dd class="order-1 text-3xl font-bold text-accent">{s.value}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+
+    <!-- Portrait -->
+    {
+      about.showImage && (
+        <div class="lg:col-span-2" data-reveal style="--reveal-delay:120ms">
+          <div class="relative mx-auto max-w-sm">
+            <div class="absolute -inset-3 rounded-3xl bg-gradient-to-br from-accent/30 via-secondary/20 to-transparent blur-xl" aria-hidden="true" />
+            <img
+              src={about.image}
+              alt={about.imageAlt}
+              loading="lazy"
+              decoding="async"
+              class="relative aspect-[4/5] w-full rounded-3xl border border-line object-cover"
+            />
+          </div>
+        </div>
+      )
+    }
+  </div>
+</section>

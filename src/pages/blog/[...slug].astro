@@ -1,0 +1,104 @@
+---
+import { getCollection, render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import BlogTopBar from "../../components/BlogTopBar.astro";
+import { features } from "../../config";
+
+// Generates `/blog` (the listing) and `/blog/<slug>` (each post).
+// When the blog feature flag is off, this returns no paths — so none of
+// these pages are built, and the blog is unreachable by URL.
+export async function getStaticPaths() {
+  if (!features.blog) return [];
+
+  const posts = (await getCollection("blog")).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+  );
+
+  return [
+    { params: { slug: undefined }, props: { kind: "index" as const, posts } },
+    ...posts.map((post) => ({
+      params: { slug: post.id },
+      props: { kind: "post" as const, post },
+    })),
+  ];
+}
+
+const props = Astro.props;
+const fmtDate = (d: Date) =>
+  new Intl.DateTimeFormat("en", { dateStyle: "long" }).format(d);
+
+// Render the markdown body only when showing a single post.
+let Content;
+if (props.kind === "post") {
+  ({ Content } = await render(props.post));
+}
+---
+
+{
+  props.kind === "index" ? (
+    <Layout title="Blog">
+      <BlogTopBar />
+      <main class="mx-auto max-w-3xl px-6 pb-24 pt-28 sm:pt-32">
+        <header class="mb-12" data-reveal>
+          <p class="mb-3 flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.2em] text-accent">
+            <span class="h-px w-8 bg-accent/60" />
+            Writing
+          </p>
+          <h1 class="text-4xl font-bold tracking-tight text-mist sm:text-5xl">Blog</h1>
+          <p class="mt-4 text-lg text-haze">
+            Notes on architecture, blockchain, and building engineering teams.
+          </p>
+        </header>
+
+        <ul class="divide-y divide-line border-y border-line" data-reveal>
+          {props.posts.map((p) => (
+            <li>
+              <a
+                href={`/blog/${p.id}`}
+                class="group flex flex-col gap-1 py-5 transition sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
+              >
+                <span class="text-lg font-semibold text-mist transition-colors group-hover:text-accent">
+                  {p.data.title}
+                </span>
+                <time
+                  datetime={p.data.pubDate.toISOString()}
+                  class="shrink-0 text-sm font-medium text-haze"
+                >
+                  {fmtDate(p.data.pubDate)}
+                </time>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </main>
+    </Layout>
+  ) : (
+    <Layout title={`${props.post.data.title} — Blog`}>
+      <BlogTopBar />
+      <main class="mx-auto max-w-3xl px-6 pb-24 pt-28 sm:pt-32">
+        <a
+          href="/blog"
+          class="inline-flex items-center gap-1.5 text-sm font-medium text-haze transition hover:text-mist"
+        >
+          ← All posts
+        </a>
+
+        <article class="mt-6" data-reveal>
+          <h1 class="text-3xl font-bold tracking-tight text-mist sm:text-4xl">
+            {props.post.data.title}
+          </h1>
+          <time
+            datetime={props.post.data.pubDate.toISOString()}
+            class="mt-3 block text-sm font-medium text-accent"
+          >
+            {fmtDate(props.post.data.pubDate)}
+          </time>
+
+          <div class="post-body mt-8">
+            <Content />
+          </div>
+        </article>
+      </main>
+    </Layout>
+  )
+}

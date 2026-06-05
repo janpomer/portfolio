@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-label="E-Archive long-term archive service preview placeholder">
+  <defs>
+    <linearGradient id="gea" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#001f54"/>
+      <stop offset="1" stop-color="#034078"/>
+    </linearGradient>
+    <radialGradient id="geaGlow" cx="50%" cy="40%" r="55%">
+      <stop offset="0" stop-color="#1282a2" stop-opacity="0.40"/>
+      <stop offset="1" stop-color="#1282a2" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="450" fill="url(#gea)"/>
+  <rect width="800" height="450" fill="url(#geaGlow)"/>
+
+  <!-- stacked archived documents -->
+  <g transform="translate(330 120)" stroke="#c8dcf0" stroke-width="3" stroke-linejoin="round" fill="#0a1c3a">
+    <rect x="14" y="14" width="120" height="150" rx="10" fill-opacity="0.55" stroke-opacity="0.35"/>
+    <rect x="7" y="7" width="120" height="150" rx="10" fill-opacity="0.75" stroke-opacity="0.55"/>
+    <rect x="0" y="0" width="120" height="150" rx="10" stroke-opacity="0.9"/>
+    <!-- text lines -->
+    <g stroke="#8fb3d9" stroke-width="5" stroke-linecap="round" stroke-opacity="0.7">
+      <line x1="22" y1="34" x2="98" y2="34"/>
+      <line x1="22" y1="54" x2="98" y2="54"/>
+      <line x1="22" y1="74" x2="74" y2="74"/>
+    </g>
+  </g>
+
+  <!-- integrity shield with check -->
+  <g transform="translate(452 196)">
+    <path d="M0 -6 38 8v28c0 30-21 48-38 60-17-12-38-30-38-60V8z" fill="#1282a2" stroke="#c8dcf0" stroke-width="2"/>
+    <path d="M-16 38 -4 50 18 24" fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- long-term clock -->
+  <g transform="translate(372 250)" fill="none" stroke="#c8dcf0" stroke-width="4" stroke-linecap="round" stroke-opacity="0.8">
+    <circle cx="0" cy="0" r="20"/>
+    <path d="M0 -10V0l7 6"/>
+  </g>
+
+  <text x="400" y="372" text-anchor="middle" font-family="Inter,sans-serif" font-size="30" fill="#ffffff" font-weight="800">E-Archive</text>
+  <text x="400" y="402" text-anchor="middle" font-family="Inter,sans-serif" font-size="16" fill="#8fb3d9">Long-Term Archive Service (RFC 4810) · Serbian Post</text>
+</svg>

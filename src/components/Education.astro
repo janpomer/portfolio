@@ -1,0 +1,55 @@
+---
+import { education } from "../data/education";
+import SectionHeading from "./SectionHeading.astro";
+---
+
+<section id="education" class="relative mx-auto max-w-6xl px-6 py-24 sm:py-32">
+  <SectionHeading eyebrow="Background" title="Education" />
+
+  <div class="grid gap-6 sm:grid-cols-2">
+    {
+      education.map((edu, i) => (
+        <div
+          class="group flex items-start gap-5 rounded-2xl border border-line bg-surface/40 p-6 transition duration-300 hover:border-line hover:bg-surface/70 sm:p-7"
+          data-reveal
+          style={`--reveal-delay:${i * 80}ms`}
+        >
+          {/* Graduation-cap icon */}
+          <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-surface text-accent ring-1 ring-line transition group-hover:ring-accent/40">
+            <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 9 12 4 2 9l10 5 10-5z" />
+              <path d="M6 11.5V16c0 1.1 2.7 2.5 6 2.5s6-1.4 6-2.5v-4.5M22 9v5" />
+            </svg>
+          </span>
+
+          <div class="min-w-0">
+            <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+              <h3 class="text-xl font-semibold text-mist">{edu.degree}</h3>
+              <span class="rounded-full bg-veil px-3 py-1 text-xs font-medium text-haze">
+                {edu.from} — {edu.to}
+              </span>
+            </div>
+
+            <p class="mt-1 font-medium text-accent">
+              {edu.link ? (
+                <a
+                  href={edu.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group/link inline-flex items-center gap-1.5 transition-colors hover:text-accent/80"
+                >
+                  {edu.university}
+                  <svg class="h-4 w-4 text-haze transition group-hover/link:text-accent group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M7 17 17 7M8 7h9v9" />
+                  </svg>
+                </a>
+              ) : (
+                edu.university
+              )}
+            </p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>

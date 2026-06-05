@@ -1,0 +1,227 @@
+---
+import { site } from "../data/site";
+---
+
+<section id="top" class="relative flex min-h-screen items-center overflow-hidden">
+  <!-- Animated distributed-network background (blockchain / P2P feel) -->
+  <canvas
+    data-network-canvas
+    class="absolute inset-0 h-full w-full"
+    aria-hidden="true"></canvas>
+
+  <!-- Faint grid overlay for a "ledger / engineering" texture -->
+  <div
+    class="pointer-events-none absolute inset-0 opacity-[0.5]"
+    style="background-image:linear-gradient(rgba(143,179,217,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(143,179,217,.06) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 40%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 40%,transparent 100%);"
+    aria-hidden="true">
+  </div>
+
+  <!-- Bottom fade into the page -->
+  <div
+    class="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-ink"
+    aria-hidden="true">
+  </div>
+
+  <div class="relative mx-auto w-full max-w-6xl px-6">
+    <p
+      class="mb-5 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-medium tracking-wide text-accent"
+      data-reveal
+    >
+      <span class="relative flex h-2 w-2">
+        <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span>
+        <span class="relative inline-flex h-2 w-2 rounded-full bg-accent"></span>
+      </span>
+      Available for select architecture &amp; lead engagements
+    </p>
+
+    <h1
+      class="max-w-4xl text-balance text-5xl font-extrabold leading-[1.05] tracking-tight text-mist sm:text-6xl lg:text-7xl"
+      data-reveal
+      style="--reveal-delay:80ms"
+    >
+      {site.name}
+    </h1>
+
+    <p
+      class="mt-4 text-xl font-medium text-accent sm:text-2xl"
+      data-reveal
+      style="--reveal-delay:160ms"
+    >
+      {site.role}
+    </p>
+
+    <p
+      class="mt-6 max-w-2xl text-lg leading-relaxed text-haze"
+      data-reveal
+      style="--reveal-delay:240ms"
+    >
+      {site.tagline}
+    </p>
+
+    <div
+      class="mt-9 flex flex-wrap items-center gap-4"
+      data-reveal
+      style="--reveal-delay:320ms"
+    >
+      <a
+        href="#contact"
+        class="group inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 text-base font-semibold text-white shadow-xl shadow-accent/25 transition hover:-translate-y-0.5 hover:bg-accent/90"
+      >
+        Get in touch
+        <svg class="h-4 w-4 transition-transform group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+      </a>
+      <a
+        href="#projects"
+        class="inline-flex items-center gap-2 rounded-full border border-line px-7 py-3.5 text-base font-semibold text-mist transition hover:border-accent/50 hover:bg-veil"
+      >
+        View projects
+      </a>
+    </div>
+  </div>
+
+  <!-- Scroll cue -->
+  <a
+    href="#experience"
+    class="absolute bottom-8 left-1/2 -translate-x-1/2 text-haze/60 transition hover:text-mist"
+    aria-label="Scroll to experience"
+  >
+    <svg class="h-6 w-6 animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 5v14M6 13l6 6 6-6" />
+    </svg>
+  </a>
+</section>
+
+<script>
+  // ── Distributed-network canvas animation ───────────────────────────
+  // Floating nodes connected by edges when they're close — a calm, abstract
+  // representation of a P2P / blockchain mesh. Pauses off-screen and respects
+  // reduced-motion preferences.
+  const canvas =
+    document.querySelector<HTMLCanvasElement>("[data-network-canvas]");
+  const prefersReduced = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  if (canvas && !prefersReduced) {
+    const ctx = canvas.getContext("2d")!;
+    let width = 0;
+    let height = 0;
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let raf = 0;
+    let running = true;
+
+    const ACCENT = "18, 130, 162"; // --color-accent rgb
+    const LINK = "70, 130, 180"; // link colour rgb
+
+    interface Node {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      r: number;
+    }
+    let nodes: Node[] = [];
+
+    const rand = (a: number, b: number) => a + Math.random() * (b - a);
+
+    function build() {
+      const area = width * height;
+      const count = Math.max(28, Math.min(80, Math.round(area / 22000)));
+      nodes = Array.from({ length: count }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: rand(-0.25, 0.25),
+        vy: rand(-0.25, 0.25),
+        r: rand(1.2, 2.6),
+      }));
+    }
+
+    function resize() {
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      build();
+    }
+
+    const MAX_DIST = 150;
+
+    function frame() {
+      if (!running) return;
+      ctx.clearRect(0, 0, width, height);
+
+      // move
+      for (const n of nodes) {
+        n.x += n.vx;
+        n.y += n.vy;
+        if (n.x < 0 || n.x > width) n.vx *= -1;
+        if (n.y < 0 || n.y > height) n.vy *= -1;
+      }
+
+      // edges
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const a = nodes[i];
+          const b = nodes[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const dist = Math.hypot(dx, dy);
+          if (dist < MAX_DIST) {
+            const alpha = (1 - dist / MAX_DIST) * 0.5;
+            ctx.strokeStyle = `rgba(${LINK}, ${alpha})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // nodes
+      for (const n of nodes) {
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(${ACCENT}, 0.9)`;
+        ctx.shadowColor = `rgba(${ACCENT}, 0.8)`;
+        ctx.shadowBlur = 8;
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.shadowBlur = 0;
+
+      raf = requestAnimationFrame(frame);
+    }
+
+    resize();
+    frame();
+
+    window.addEventListener("resize", () => {
+      cancelAnimationFrame(raf);
+      resize();
+      if (running) frame();
+    });
+
+    // Pause when the hero scrolls out of view to save battery/CPU.
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          running = e.isIntersecting;
+          if (running) {
+            cancelAnimationFrame(raf);
+            frame();
+          } else {
+            cancelAnimationFrame(raf);
+          }
+        }
+      },
+      { threshold: 0 },
+    );
+    io.observe(canvas);
+  }
+</script>
