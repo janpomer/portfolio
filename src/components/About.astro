@@ -1,6 +1,7 @@
 ---
 import { about } from "../data/about";
 import SectionHeading from "./SectionHeading.astro";
+import { withBase } from "../utils/url";
 ---
 
 <section id="about" class="relative mx-auto max-w-6xl px-6 py-24 sm:py-32">
@@ -32,7 +33,7 @@ import SectionHeading from "./SectionHeading.astro";
           <div class="relative mx-auto max-w-sm">
             <div class="absolute -inset-3 rounded-3xl bg-gradient-to-br from-accent/30 via-secondary/20 to-transparent blur-xl" aria-hidden="true" />
             <img
-              src={about.image}
+              src={withBase(about.image)}
               alt={about.imageAlt}
               loading="lazy"
               decoding="async"

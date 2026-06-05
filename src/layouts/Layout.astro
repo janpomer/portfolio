@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { site } from "../data/site";
+import { withBase } from "../utils/url";
 
 interface Props {
   title?: string;
@@ -35,8 +36,8 @@ const {
       })();
     </script>
 
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
+    <link rel="icon" type="image/png" href={withBase("/favicon.png")} />
+    <link rel="apple-touch-icon" href={withBase("/favicon.png")} />
     <meta name="generator" content={Astro.generator} />
 
     <title>{title}</title>

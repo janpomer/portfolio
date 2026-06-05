@@ -1,6 +1,7 @@
 ---
 import { site, navLinks } from "../data/site";
 import { features } from "../config";
+import { withBase } from "../utils/url";
 ---
 
 <header
@@ -15,7 +16,7 @@ import { features } from "../config";
       class="group flex items-center gap-2 text-sm font-semibold tracking-tight text-mist"
     >
       <img
-        src="/favicon.png"
+        src={withBase("/favicon.png")}
         alt={`${site.name} monogram`}
         width="32"
         height="32"
@@ -42,7 +43,7 @@ import { features } from "../config";
         features.blog && (
           <li>
             <a
-              href="/blog"
+              href={withBase("/blog")}
               class="text-sm font-medium text-haze transition-colors hover:text-mist"
             >
               Blog
@@ -129,7 +130,7 @@ import { features } from "../config";
         features.blog && (
           <li>
             <a
-              href="/blog"
+              href={withBase("/blog")}
               class="block rounded-lg px-3 py-2 text-base font-medium text-haze transition hover:bg-veil hover:text-mist"
               data-mobile-link
             >

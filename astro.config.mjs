@@ -9,12 +9,13 @@ import tailwindcss from '@tailwindcss/vite';
 // .github/workflows/deploy.yml). Defaults assume a root deployment, e.g. a
 // GitHub user page (janpomer.github.io) or a custom domain.
 //
-// NOTE: this site uses root-relative asset/link paths (e.g. "/favicon.png",
-// "/blog"). Those only work when served from the domain root. If you deploy to
-// a *project* subpath (https://<user>.github.io/<repo>/), set BASE_PATH and
-// rewrite those paths to be prefixed with import.meta.env.BASE_URL.
+// Deployed to a GitHub project page at https://janpomer.github.io/portfolio/,
+// so the site lives under the "/portfolio/" base path. Internal asset/link
+// paths are prefixed with this base via the withBase() helper (src/utils/url.ts);
+// Astro prefixes its own bundled CSS/JS automatically.
+// Override with the SITE / BASE_PATH env vars (the deploy workflow sets them).
 const site = process.env.SITE ?? 'https://janpomer.github.io';
-const base = process.env.BASE_PATH ?? '/';
+const base = process.env.BASE_PATH ?? '/portfolio';
 
 export default defineConfig({
   site,

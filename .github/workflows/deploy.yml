@@ -44,11 +44,9 @@ jobs:
         env:
           # Canonical URL used for sitemap/OG tags.
           SITE: https://${{ github.repository_owner }}.github.io
-          # --- Project page only ---------------------------------------
-          # If this repo is NOT named "<owner>.github.io" and you deploy to
-          # https://<owner>.github.io/<repo>/, uncomment the next line AND
-          # rewrite root-relative paths to use import.meta.env.BASE_URL.
-          # BASE_PATH: /${{ github.event.repository.name }}/
+          # Project page served from https://<owner>.github.io/<repo>/.
+          # Internal paths are made base-aware via withBase() (src/utils/url.ts).
+          BASE_PATH: /${{ github.event.repository.name }}/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
