@@ -1,4 +1,9 @@
-verifyDepsBeforeRun: false
-onlyBuiltDependencies:
+# pnpm settings (read by pnpm 10+). Committed so CI matches local.
+verifyDepsBeforeRun: false # don't re-run install before `pnpm <script>`
+strictDepBuilds: false # ignored dep build scripts are a warning, not a fatal error
+onlyBuiltDependencies: # allow these native deps to run their build scripts
   - esbuild
   - sharp
+allowBuilds:
+  esbuild: true
+  sharp: true
