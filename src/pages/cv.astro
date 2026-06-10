@@ -1,0 +1,310 @@
+---
+// ────────────────────────────────────────────────────────────────
+// Printable CV / résumé.
+//
+// Reuses the same content as the landing page (src/data/*) but lays it
+// out as a clean, document-style A4 sheet. A "Download PDF" button calls
+// window.print(); the visitor picks "Save as PDF" in the browser dialog.
+//
+// The sheet is intentionally light/neutral regardless of the site theme,
+// and a `@media print` block strips the chrome (button, backdrop, shadow)
+// so the printed output is just the sheet.
+// ────────────────────────────────────────────────────────────────
+import Layout from "../layouts/Layout.astro";
+import { site } from "../data/site";
+import { experiences } from "../data/experience";
+import { education } from "../data/education";
+import { projects } from "../data/projects";
+import { primaryStack, secondaryStack } from "../data/stack";
+import { about } from "../data/about";
+import { withBase } from "../utils/url";
+
+const skills = [...primaryStack, ...secondaryStack].map((t) => t.name);
+const cleanUrl = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+---
+
+<Layout title={`${site.name} — CV`} description={`Curriculum vitae of ${site.name}, ${site.role}.`}>
+  <!-- Action bar (screen only) -->
+  <div class="no-print sticky top-0 z-50 border-b border-line bg-ink/90 backdrop-blur">
+    <div class="mx-auto flex max-w-[820px] items-center justify-between px-6 py-3">
+      <a
+        href={withBase("/")}
+        class="inline-flex items-center gap-2 text-sm font-medium text-haze transition-colors hover:text-mist"
+      >
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+        Back to site
+      </a>
+      <button
+        type="button"
+        data-print
+        class="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-accent/20 transition hover:bg-accent/90"
+      >
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3v12M7 10l5 5 5-5M5 21h14" />
+        </svg>
+        Download PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- The printable sheet -->
+  <main class="cv-page mx-auto my-8 max-w-[820px] px-6 print:my-0 print:px-0">
+    <article class="cv-sheet rounded-2xl p-10 shadow-2xl shadow-black/30 sm:p-12 print:rounded-none print:p-0 print:shadow-none">
+      <!-- Header -->
+      <header class="cv-head border-b pb-6">
+        <h1 class="cv-name text-3xl font-bold tracking-tight sm:text-4xl">{site.name}</h1>
+        <p class="cv-role mt-1 text-lg font-medium">{site.role}</p>
+        <ul class="cv-contact mt-4 flex flex-wrap gap-x-5 gap-y-1.5 text-sm">
+          <li>
+            <a href={`mailto:${site.email}`}>{site.email}</a>
+          </li>
+          <li>{site.location}</li>
+          <li>
+            <a href={site.socials.linkedin}>{cleanUrl(site.socials.linkedin)}</a>
+          </li>
+          <li>
+            <a href={site.socials.github}>{cleanUrl(site.socials.github)}</a>
+          </li>
+        </ul>
+      </header>
+
+      <!-- Summary -->
+      <section class="cv-section">
+        <h2 class="cv-h2">Summary</h2>
+        {about.paragraphs.map((p) => <p class="cv-text mt-2">{p}</p>)}
+      </section>
+
+      <!-- Experience -->
+      <section class="cv-section">
+        <h2 class="cv-h2">Experience</h2>
+        {
+          experiences.map((exp) => (
+            <div class="cv-entry">
+              <div class="cv-entry-head">
+                <h3 class="cv-entry-title">
+                  {exp.position} ·{" "}
+                  {exp.link ? (
+                    <a href={exp.link}>{exp.company}</a>
+                  ) : (
+                    <span>{exp.company}</span>
+                  )}
+                </h3>
+                <span class="cv-dates">
+                  {exp.from} – {exp.to}
+                </span>
+              </div>
+              <ul class="cv-bullets">
+                {exp.bullets.map((b) => (
+                  <li>{b}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </section>
+
+      <!-- Education -->
+      <section class="cv-section">
+        <h2 class="cv-h2">Education</h2>
+        {
+          education.map((ed) => (
+            <div class="cv-entry">
+              <div class="cv-entry-head">
+                <h3 class="cv-entry-title">
+                  {ed.degree} ·{" "}
+                  {ed.link ? (
+                    <a href={ed.link}>{ed.university}</a>
+                  ) : (
+                    <span>{ed.university}</span>
+                  )}
+                </h3>
+                <span class="cv-dates">
+                  {ed.from} – {ed.to}
+                </span>
+              </div>
+            </div>
+          ))
+        }
+      </section>
+
+      <!-- Skills -->
+      <section class="cv-section">
+        <h2 class="cv-h2">Skills</h2>
+        <ul class="cv-skills mt-2">
+          {skills.map((s) => <li>{s}</li>)}
+        </ul>
+      </section>
+
+      <!-- Selected projects -->
+      <section class="cv-section">
+        <h2 class="cv-h2">Selected Projects</h2>
+        {
+          projects.map((p) => (
+            <div class="cv-entry">
+              <h3 class="cv-entry-title">
+                {p.link ? <a href={p.link}>{p.title}</a> : <span>{p.title}</span>}
+                {p.tags.length > 0 && (
+                  <span class="cv-tags"> — {p.tags.join(", ")}</span>
+                )}
+              </h3>
+              <p class="cv-text mt-1">{p.description}</p>
+            </div>
+          ))
+        }
+      </section>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  /* The sheet is a light document regardless of the site theme. */
+  .cv-sheet {
+    background: #ffffff;
+    color: #1f2937; /* slate-800 */
+    line-height: 1.55;
+  }
+
+  .cv-head {
+    border-color: #e5e7eb;
+  }
+  .cv-name {
+    color: #001f54; /* brand navy */
+  }
+  .cv-role {
+    color: #1282a2; /* brand teal */
+  }
+  .cv-contact a {
+    color: #034078;
+    text-decoration: none;
+  }
+  .cv-contact a:hover {
+    text-decoration: underline;
+  }
+  .cv-contact li:not(:last-child)::after {
+    content: "·";
+    margin-left: 1.25rem;
+    color: #9ca3af;
+  }
+
+  .cv-section {
+    margin-top: 1.75rem;
+  }
+  .cv-h2 {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #001f54;
+    border-bottom: 2px solid #1282a2;
+    padding-bottom: 0.35rem;
+  }
+
+  .cv-text {
+    color: #374151;
+    font-size: 0.92rem;
+  }
+
+  .cv-entry {
+    margin-top: 1rem;
+    break-inside: avoid;
+  }
+  .cv-entry-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.25rem 1rem;
+  }
+  .cv-entry-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+  }
+  .cv-entry-title a {
+    color: #034078;
+    text-decoration: none;
+  }
+  .cv-entry-title a:hover {
+    text-decoration: underline;
+  }
+  .cv-dates {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #6b7280;
+    white-space: nowrap;
+  }
+  .cv-tags {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: #6b7280;
+  }
+
+  .cv-bullets {
+    margin-top: 0.4rem;
+    padding-left: 1.1rem;
+    list-style: disc;
+  }
+  .cv-bullets li {
+    font-size: 0.9rem;
+    color: #374151;
+    margin-top: 0.2rem;
+  }
+
+  .cv-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.5rem;
+    list-style: none;
+    padding: 0;
+  }
+  .cv-skills li {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #034078;
+    background: #eef3f9;
+    border: 1px solid #d6e0ec;
+    border-radius: 9999px;
+    padding: 0.2rem 0.7rem;
+  }
+
+  /* ── Print ─────────────────────────────────────────────────────── */
+  @media print {
+    /* Strip the dark page backdrop & glow from global.css. */
+    :global(body) {
+      background: #ffffff !important;
+    }
+    :global(body::before) {
+      display: none !important;
+    }
+    .no-print {
+      display: none !important;
+    }
+    /* Make accent fills/colours actually print. */
+    .cv-sheet,
+    .cv-skills li,
+    .cv-h2 {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+</style>
+
+<script>
+  // "Download PDF" → open the browser print dialog (Save as PDF).
+  document
+    .querySelector<HTMLButtonElement>("[data-print]")
+    ?.addEventListener("click", () => window.print());
+
+  // Allow arriving with ?print to auto-open the dialog (e.g. a "Download CV"
+  // link elsewhere can deep-link straight into printing).
+  if (new URLSearchParams(window.location.search).has("print")) {
+    window.addEventListener("load", () => window.print());
+  }
+</script>

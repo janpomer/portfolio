@@ -69,6 +69,17 @@ import { withBase } from "../utils/url";
       </li>
       <li>
         <a
+          href={withBase("/cv")}
+          class="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-medium text-haze ring-1 ring-line transition hover:bg-veil hover:text-mist"
+        >
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3v12M7 10l5 5 5-5M5 21h14" />
+          </svg>
+          CV
+        </a>
+      </li>
+      <li>
+        <a
           href="#contact"
           class="rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-accent/20 transition hover:bg-accent/90"
         >
@@ -139,6 +150,18 @@ import { withBase } from "../utils/url";
           </li>
         )
       }
+      <li>
+        <a
+          href={withBase("/cv")}
+          class="flex items-center gap-2 rounded-lg px-3 py-2 text-base font-medium text-haze transition hover:bg-veil hover:text-mist"
+          data-mobile-link
+        >
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3v12M7 10l5 5 5-5M5 21h14" />
+          </svg>
+          Download CV
+        </a>
+      </li>
       <li class="pt-2">
         <a
           href="#contact"
