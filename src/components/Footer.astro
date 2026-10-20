@@ -22,7 +22,7 @@ const year = new Date().getFullYear();
     </p>
     <div class="relative mt-8 flex flex-wrap items-center justify-center gap-4">
       <a
-        href={`mailto:${site.email}`}
+        href={`mailto:${site.email}`} data-analytics="contact" data-location="contact"
         class="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3.5 text-base font-semibold text-white shadow-xl shadow-accent/25 transition hover:-translate-y-0.5 hover:bg-accent/90"
       >
         <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -43,7 +43,7 @@ const year = new Date().getFullYear();
 
     <div class="flex items-center gap-3">
       <a
-        href={site.socials.linkedin}
+        href={site.socials.linkedin} data-analytics="social" data-platform="linkedin" data-location="footer"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="LinkedIn"
@@ -54,7 +54,7 @@ const year = new Date().getFullYear();
         </svg>
       </a>
       <a
-        href={site.socials.github}
+        href={site.socials.github} data-analytics="social" data-platform="github" data-location="footer"
         target="_blank"
         rel="noopener noreferrer"
         aria-label="GitHub"

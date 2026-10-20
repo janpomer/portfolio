@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import ConsentControls from "../features/analytics/ConsentControls.astro";
 import { site } from "../data/site";
 import { withBase } from "../utils/url";
 
@@ -61,6 +62,7 @@ const {
   </head>
   <body>
     <slot />
+    <ConsentControls />
 
     <!-- Theme toggle — handles any [data-theme-toggle] button on the page.
          The initial theme is set pre-paint by the inline script in <head>. -->

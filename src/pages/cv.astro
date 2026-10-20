@@ -38,7 +38,7 @@ const cleanUrl = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/,
       </a>
       <button
         type="button"
-        data-print
+        data-print data-analytics="print" data-location="cv"
         class="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-accent/20 transition hover:bg-accent/90"
       >
         <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -58,14 +58,14 @@ const cleanUrl = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/,
         <p class="cv-role mt-1 text-lg font-medium">{site.role}</p>
         <ul class="cv-contact mt-4 flex flex-wrap gap-x-5 gap-y-1.5 text-sm">
           <li>
-            <a href={`mailto:${site.email}`}>{site.email}</a>
+            <a href={`mailto:${site.email}`} data-analytics="contact" data-location="cv">{site.email}</a>
           </li>
           <li>{site.location}</li>
           <li>
-            <a href={site.socials.linkedin}>{cleanUrl(site.socials.linkedin)}</a>
+            <a href={site.socials.linkedin} data-analytics="social" data-platform="linkedin" data-location="cv">{cleanUrl(site.socials.linkedin)}</a>
           </li>
           <li>
-            <a href={site.socials.github}>{cleanUrl(site.socials.github)}</a>
+            <a href={site.socials.github} data-analytics="social" data-platform="github" data-location="cv">{cleanUrl(site.socials.github)}</a>
           </li>
         </ul>
       </header>
@@ -144,7 +144,7 @@ const cleanUrl = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/,
           projects.map((p) => (
             <div class="cv-entry">
               <h3 class="cv-entry-title">
-                {p.link ? <a href={p.link}>{p.title}</a> : <span>{p.title}</span>}
+                {p.link ? <a href={p.link} data-analytics="project" data-project={p.id} data-location="cv">{p.title}</a> : <span>{p.title}</span>}
                 {p.tags.length > 0 && (
                   <span class="cv-tags"> — {p.tags.join(", ")}</span>
                 )}
@@ -296,15 +296,4 @@ const cleanUrl = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/,
   }
 </style>
 
-<script>
-  // "Download PDF" → open the browser print dialog (Save as PDF).
-  document
-    .querySelector<HTMLButtonElement>("[data-print]")
-    ?.addEventListener("click", () => window.print());
-
-  // Allow arriving with ?print to auto-open the dialog (e.g. a "Download CV"
-  // link elsewhere can deep-link straight into printing).
-  if (new URLSearchParams(window.location.search).has("print")) {
-    window.addEventListener("load", () => window.print());
-  }
-</script>
+<script src="../features/cv/print.ts"></script>

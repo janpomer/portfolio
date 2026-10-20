@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { withBase } from '../utils/url';
+import { site } from '../data/site';
+---
+<Layout title="Privacy — Jan Pomer">
+  <main class="mx-auto max-w-3xl px-6 py-16 text-mist">
+    <a href={withBase('/')} class="text-accent underline underline-offset-4">Back to portfolio</a>
+    <h1 class="mt-8 text-4xl font-bold">Privacy</h1>
+    <p class="mt-4 text-sm text-haze">Updated 20 October 2026</p>
+    <div class="post-body mt-8">
+      <h2>Who runs this site</h2>
+      <p>This is Jan Pomer's professional portfolio. For privacy questions, contact <a href={`mailto:${site.email}`}>{site.email}</a>.</p>
+      <h2>Optional analytics</h2>
+      <p>If you accept analytics, this site uses Google Analytics 4 to understand page visits, traffic sources, content reach, and clicks on contact links, social profiles, projects and CV controls. These measurements help me improve the portfolio. Clicking email or printing does not tell me whether you sent a message or saved a file.</p>
+      <p>Google receives technical information needed to process a visit, including network requests and device/browser information, and uses a cookie identifier to distinguish visits. I do not send email link contents, message text, or personal contact details in analytics events. Page query strings and fragments are removed; only selected campaign labels are used.</p>
+      <h2>Your choice</h2>
+      <p>Analytics is off until you accept. Use Analytics settings at the bottom of any page to accept, reject or withdraw your choice. Withdrawal stops analytics, removes the analytics cookies set by this integration and reloads the page. It does not erase information already received by Google. Your choice is saved in this browser's local storage. If storage is unavailable, it may be requested again on your next visit.</p>
+      <p>Analytics cookies expire after 60 days without being extended by this integration. Event-level retention is controlled in the Google Analytics property; contact me for the current setting or questions about data already collected. This site does not enable advertising personalization through its analytics tag.</p>
+      <h2>Other services</h2>
+      <p>The site is hosted by Google Firebase Hosting and loads fonts from Google Fonts. Those services receive requests needed to deliver the site independently of your optional analytics choice. External links take you to other providers with their own privacy practices.</p>
+      <p>See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's privacy policy</a> and <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener noreferrer">how Google uses information from partner sites</a>.</p>
+    </div>
+  </main>
+</Layout>

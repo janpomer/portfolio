@@ -13,7 +13,7 @@ import { withBase } from "../utils/url";
         const Tag = p.link ? "a" : "div";
         return (
           <Tag
-            {...(p.link ? { href: p.link, target: "_blank", rel: "noopener noreferrer" } : {})}
+            {...(p.link ? { href: p.link, "data-analytics": "project", "data-project": p.id, "data-location": "projects", target: "_blank", rel: "noopener noreferrer" } : {})}
             class="group relative flex flex-col overflow-hidden rounded-2xl border border-line bg-surface/40 transition duration-300 hover:-translate-y-1 hover:border-accent/30 hover:bg-surface/70 hover:shadow-2xl hover:shadow-black/30"
             data-reveal
             style={`--reveal-delay:${i * 80}ms`}

@@ -1,0 +1,29 @@
+---
+import { withBase } from '../../utils/url';
+const id = import.meta.env.PUBLIC_GA_MEASUREMENT_ID ?? '';
+const hosts = import.meta.env.PUBLIC_ANALYTICS_HOSTS ?? '';
+---
+<div data-analytics-config data-id={id} data-hosts={hosts} data-production={String(import.meta.env.PROD)} data-base={import.meta.env.BASE_URL}>
+  <div class="analytics-links mx-auto flex max-w-6xl flex-wrap justify-center gap-5 px-6 py-5 text-sm text-haze">
+    <a href={withBase('/privacy/')} class="underline underline-offset-4 hover:text-mist">Privacy</a>
+    <button type="button" data-analytics-settings hidden class="underline underline-offset-4 hover:text-mist">Analytics settings</button>
+  </div>
+  <section data-consent-panel hidden aria-labelledby="analytics-heading" class="analytics-panel fixed inset-x-3 bottom-3 z-[60] mx-auto max-w-2xl rounded-2xl border border-line bg-ink p-5 text-mist shadow-2xl sm:p-6">
+    <h2 id="analytics-heading" class="text-lg font-semibold">Your privacy choices</h2>
+    <p class="mt-2 text-sm leading-relaxed text-haze">May I use Google Analytics to understand visits and interest in my work? Analytics is optional. Your choice won't affect how this site works. <a class="underline underline-offset-4" href={withBase('/privacy/')}>Privacy details</a></p>
+    <div class="mt-4 flex flex-wrap gap-3">
+      <button type="button" data-consent="accepted" class="rounded-full border border-line bg-surface px-5 py-3 text-sm font-semibold hover:bg-veil">Accept analytics</button>
+      <button type="button" data-consent="rejected" class="rounded-full border border-line bg-surface px-5 py-3 text-sm font-semibold hover:bg-veil">Reject analytics</button>
+      <button type="button" data-consent-close hidden class="rounded-full border border-line px-5 py-3 text-sm hover:bg-veil">Cancel</button>
+    </div>
+  </section>
+</div>
+<style>
+  [hidden] { display: none !important; }
+  button:focus-visible, a:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 4px; }
+  @media print { .analytics-links, .analytics-panel { display: none !important; } }
+</style>
+<script>
+  import { startAnalytics } from './index.mjs';
+  startAnalytics();
+</script>

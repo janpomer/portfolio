@@ -3,6 +3,7 @@
 // `image` at them. Set `link` to null if a project has no landing page.
 // ────────────────────────────────────────────────────────────────
 export interface Project {
+  id: string;
   title: string;
   description: string;
   image: string; // path under /public
@@ -12,6 +13,7 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    id: "teranode-sign",
     title: "Teranode Sign",
     description:
       "A document authentication service that replaces wet signatures and email-based workflows with cryptographically signed, blockchain-anchored documents — tamper-evident and verifiable by anyone, anywhere, without a third party.",
@@ -20,6 +22,7 @@ export const projects: Project[] = [
     tags: ["Blockchain", "Document Authentication", "Cryptography", "Verification"],
   },
   {
+    id: "teranode",
     title: "Teranode",
     description:
       "A modular, microservices-based node architecture for the BSV blockchain, engineered for unbounded scalability — processing over one million transactions per second to support enterprise-grade applications across finance, healthcare, retail, and government.",
@@ -28,6 +31,7 @@ export const projects: Project[] = [
     tags: ["PoC", "Blockchain (BSV)", "Microservices", "1M+ TPS", "Scalability"],
   },
   {
+    id: "elivestock",
     title: "eLivestock",
     description:
       "A digital livestock management platform for animal identification, record-keeping and traceability, using blockchain to guarantee tamper-proof records and an auditable chain of custody. It lets livestock owners register identification marks, manage herds, and access market pricing in line with agricultural legislation. I was the solution architect, developed during my work at nChain.",
@@ -36,6 +40,7 @@ export const projects: Project[] = [
     tags: ["Solution Architecture", "Blockchain", "Traceability", "Web & Mobile"],
   },
   {
+    id: "autistica",
     title: "Autistica",
     description:
       "The Android mobile app for Autistica, the UK's autism research charity, building evidence-based tools — created with and for the autistic community — to help autistic people live happier, healthier and longer lives.",
@@ -44,6 +49,7 @@ export const projects: Project[] = [
     tags: ["Android", "Kotlin", "Mobile", "Accessibility"],
   },
   {
+    id: "miradio",
     title: "miRadio",
     description:
       "Backend system for a voice-activated, on-demand radio application on Google Assistant and Amazon Alexa, built at Inova IT. Radio stations could publish their content and configure the behaviour of the voice experience, delivering on-demand stations and programming to listeners entirely by voice.",
@@ -52,6 +58,7 @@ export const projects: Project[] = [
     tags: ["Java", "Spring Boot", "Amazon Alexa", "Google Assistant", "Voice UI"],
   },
   {
+    id: "number-portability",
     title: "Number Portability System",
     description:
       "Mobile and fixed-line telephone number portability system delivered at Teletech for the Eastern Caribbean Telecommunications Authority (ECTEL) and Ukraine, letting subscribers keep their numbers when changing operators by coordinating porting and number routing between carriers.",
@@ -60,6 +67,7 @@ export const projects: Project[] = [
     tags: ["Java EE", "Telecom", "Number Portability", "Integrations"],
   },
   {
+    id: "e-archive",
     title: "E-Archive",
     description:
       "Long-term electronic archive service for the Serbian Post Office, built at Teletech and based on the RFC 4810 Long-Term Archive Service. Provided secure, verifiable preservation of electronic documents across extended retention periods, maintaining their integrity and evidentiary value over time.",

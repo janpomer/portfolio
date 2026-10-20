@@ -102,7 +102,7 @@ npx firebase-tools@latest login
 Before each deployment, build with the Firebase URL and the root base path:
 
 ```bash
-SITE=https://portfolio-2bf3e.web.app BASE_PATH=/ pnpm build
+PUBLIC_GA_MEASUREMENT_ID=G-JG3H8KL8LE PUBLIC_ANALYTICS_HOSTS=portfolio-2bf3e.web.app,portfolio-2bf3e.firebaseapp.com SITE=https://portfolio-2bf3e.web.app BASE_PATH=/ pnpm build
 npx firebase-tools@latest deploy --only hosting --project portfolio-2bf3e
 ```
 
@@ -110,7 +110,7 @@ If pnpm fails with `unable to open database file`, run the installed Astro CLI
 directly for the build:
 
 ```bash
-SITE=https://portfolio-2bf3e.web.app BASE_PATH=/ node node_modules/astro/astro.js build
+PUBLIC_GA_MEASUREMENT_ID=G-JG3H8KL8LE PUBLIC_ANALYTICS_HOSTS=portfolio-2bf3e.web.app,portfolio-2bf3e.firebaseapp.com SITE=https://portfolio-2bf3e.web.app BASE_PATH=/ node node_modules/astro/astro.js build
 ```
 
 Do not deploy the GitHub Pages build: its `/portfolio/` base path is unsuitable
@@ -131,3 +131,11 @@ You're welcome to **fork this and use it as a template for your own portfolio.**
   their respective owners and are included only as examples.
 
 Attribution is appreciated but not required.
+
+## Analytics
+
+Optional GA4 analytics loads only after acceptance on explicitly configured production
+hosts. See [analytics setup and reports](docs/analytics.md). Copy `.env.example` for
+local build settings; empty values disable collection. Never use real credentials
+for the public settings. Privacy and style-guide routes are excluded; production
+previews on localhost do not collect. Run `node --test tests/*.test.mjs` after building.
