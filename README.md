@@ -88,6 +88,37 @@ The site uses root-relative paths, so it expects to be served from the domain ro
 Set your canonical URL via the `SITE` env var (the workflow sets it automatically) or
 in [`astro.config.mjs`](astro.config.mjs).
 
+## Deployment (Firebase Hosting)
+
+The checked-in `firebase.json` serves the static build from `dist/` without a
+single-page-app fallback, so CV and blog pages retain their own routes.
+
+The default Firebase project in `.firebaserc` is `portfolio-2bf3e`. Sign in:
+
+```bash
+npx firebase-tools@latest login
+```
+
+Before each deployment, build with the Firebase URL and the root base path:
+
+```bash
+SITE=https://portfolio-2bf3e.web.app BASE_PATH=/ pnpm build
+npx firebase-tools@latest deploy --only hosting --project portfolio-2bf3e
+```
+
+If pnpm fails with `unable to open database file`, run the installed Astro CLI
+directly for the build:
+
+```bash
+SITE=https://portfolio-2bf3e.web.app BASE_PATH=/ node node_modules/astro/astro.js build
+```
+
+Do not deploy the GitHub Pages build: its `/portfolio/` base path is unsuitable
+for the Firebase domain root. If you connect a custom domain, use that URL as
+`SITE` instead. Open the Hosting URL printed by the deployment command and check
+the images, navigation, and CV pages. Later deployments can be rolled back from
+the Firebase console's Hosting release history.
+
 ## License & reuse
 
 You're welcome to **fork this and use it as a template for your own portfolio.**
