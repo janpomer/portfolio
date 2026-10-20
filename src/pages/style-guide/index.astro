@@ -1,0 +1,51 @@
+---
+import StyleGuideLayout from "../../layouts/StyleGuideLayout.astro";
+
+const weights = [
+  { value: 400, name: "Regular", class: "font-normal", use: "Body copy and descriptions" },
+  { value: 500, name: "Medium", class: "font-medium", use: "Navigation and supporting labels" },
+  { value: 600, name: "Semibold", class: "font-semibold", use: "Actions, card titles, and tags" },
+  { value: 700, name: "Bold", class: "font-bold", use: "Page and section headings" },
+  { value: 800, name: "Extrabold", class: "font-extrabold", use: "The portfolio hero name" },
+];
+const scale = [
+  { name: "Hero", detail: "48 / 60 / 72px · 800 · line-height 1.05 · tight tracking", class: "text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl", sample: "Built to connect" },
+  { name: "Page title", detail: "36 / 48px · 700 · tight tracking", class: "text-4xl font-bold tracking-tight sm:text-5xl", sample: "Ideas & architecture" },
+  { name: "Section heading", detail: "30 / 36px · 700 · tight tracking", class: "text-3xl font-bold tracking-tight sm:text-4xl", sample: "Selected work" },
+  { name: "Card title", detail: "18px · 600 · line-height 28px", class: "text-lg font-semibold", sample: "Distributed systems" },
+  { name: "Body", detail: "18px · 400 · line-height 1.625", class: "text-lg leading-relaxed font-normal", sample: "Clear thinking, thoughtful engineering, and software that lasts." },
+  { name: "Small body", detail: "14px · 400 · line-height 1.625", class: "text-sm leading-relaxed font-normal", sample: "Supporting detail gives a project its context." },
+  { name: "Eyebrow", detail: "14px · 600 · uppercase · tracking 0.2em", class: "text-sm font-semibold uppercase tracking-[0.2em]", sample: "Selected work" },
+];
+---
+
+<StyleGuideLayout title="Fonts" description="One typeface, a clear hierarchy. The typography used across the portfolio, with live specimens and guidance for each role.">
+  <section aria-labelledby="family" class="border-t border-line py-8">
+    <div class="grid gap-6 md:grid-cols-[1fr_2fr]">
+      <div><h2 id="family" class="text-xl font-semibold text-mist">Inter</h2><p class="mt-2 text-sm leading-relaxed">The sans-serif family for headings, body text, and controls. Loaded in weights 400–800 with display=swap.</p></div>
+      <div class="min-w-0"><p class="text-6xl font-medium tracking-tight text-mist sm:text-7xl">Aa Bb Cc</p><p class="mt-4 break-words text-xl leading-relaxed text-mist">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br />abcdefghijklmnopqrstuvwxyz<br />0123456789 &amp; @ # ? !</p></div>
+    </div>
+    <h3 class="mt-8 text-sm font-semibold text-mist">Fallback stack</h3>
+    <p class="mt-2 text-sm leading-relaxed">If Inter cannot load, the page uses the visitor’s system sans-serif font. Sizes below assume a 16px root; rem units respect browser text settings.</p>
+    <code class="mt-3 block rounded-lg border border-line bg-surface p-4 text-sm leading-relaxed text-mist">"Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif</code>
+  </section>
+  <section aria-labelledby="weights" class="border-t border-line py-8">
+    <h2 id="weights" class="mb-6 text-xl font-semibold text-mist">Font weights</h2>
+    {weights.map((weight) => <div class="grid gap-2 border-t border-line py-5 sm:grid-cols-[1fr_2fr]"><div><h3 class="text-sm font-medium text-mist">{weight.name} · Weight {weight.value}</h3><p class="mt-1 text-sm">{weight.use}</p></div><p class:list={["text-2xl text-mist", weight.class]}>Engineering with purpose.</p></div>)}
+  </section>
+  <section aria-labelledby="scale" class="border-t border-line py-8">
+    <h2 id="scale" class="text-xl font-semibold text-mist">Type scale</h2>
+    <p class="mt-2 mb-6 text-sm leading-relaxed">Sizes progress from mobile to sm (640px), then lg (1024px) where listed. Page titles use the blog listing scale; section headings follow the portfolio.</p>
+    {scale.map((item) => <div class="border-t border-line py-6"><h3 class="text-sm font-semibold text-mist">{item.name}</h3><p class="mt-1 mb-4 text-xs leading-relaxed">{item.detail}</p><p class:list={["break-words text-mist", item.class]}>{item.sample}</p></div>)}
+  </section>
+  <section aria-labelledby="reading" class="border-t border-line py-8">
+    <h2 id="reading" class="text-xl font-semibold text-mist">Reading &amp; inline text</h2>
+    <p class="mt-2 text-sm leading-relaxed">Long-form blog copy uses a 1.75 line height. Strong text uses weight 600; links are underlined. Inline code uses the system monospace stack with a smaller size and subtle fill.</p>
+    <div class="post-body mt-6 max-w-3xl"><p>Good architecture starts with <strong>clear boundaries</strong>. Use <code>--font-sans</code> for the shared font family, and keep supporting text concise. <a href="#family">Review the typeface</a> before introducing a new text style.</p></div>
+    <p class="mt-4 text-sm leading-relaxed">Source: Layout.astro (font loading), global.css (font stack and prose), Hero.astro, SectionHeading.astro, Projects.astro, and blog/[...slug].astro (type scale).</p>
+  </section>
+  <section aria-labelledby="document" class="border-t border-line py-8">
+    <h2 id="document" class="text-xl font-semibold text-mist">Document exception</h2>
+    <p class="mt-3 max-w-3xl leading-relaxed">The CV keeps the same font family but uses a compact, print-focused scale on a permanently light sheet: 0.92rem body text, 1.55 line height, and 0.8rem uppercase section labels. Its document styling does not switch with the page theme.</p>
+  </section>
+</StyleGuideLayout>

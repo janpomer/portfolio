@@ -6,11 +6,13 @@ import { withBase } from "../utils/url";
 interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
 }
 
 const {
   title = `${site.name} — ${site.role}`,
   description = site.metaDescription,
+  noindex = false,
 } = Astro.props;
 ---
 
@@ -42,6 +44,7 @@ const {
 
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />

@@ -1,0 +1,48 @@
+---
+import Layout from "./Layout.astro";
+import { withBase } from "../utils/url";
+
+interface Props { title: string; description: string; }
+const { title, description } = Astro.props;
+---
+
+<Layout title={`${title} — Style guidelines`} description={description} noindex>
+  <div class="guide mx-auto max-w-6xl px-6 pb-20">
+    <a class="skip-link" href="#guide-content">Skip to content</a>
+    <header class="border-b border-line py-6">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <p class="text-sm font-semibold tracking-wide text-mist">JP <span class="mx-3 text-haze" aria-hidden="true">/</span> Style guidelines</p>
+        <button type="button" data-theme-toggle class="rounded-full border border-line px-4 py-2 text-sm text-mist transition hover:bg-veil">
+          Switch theme
+        </button>
+      </div>
+      <nav aria-label="Style guidelines" class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
+        <a href={withBase("/style-guide/")} aria-current="page" class="font-semibold text-mist underline decoration-accent decoration-2 underline-offset-8">01 · Fonts</a>
+        <span class="text-haze">02 · Colors <small>(Coming next)</small></span>
+        <span class="text-haze">03 · Components <small>(Coming next)</small></span>
+      </nav>
+    </header>
+    <main id="guide-content" tabindex="-1">
+      <header class="max-w-3xl pb-10 pt-12 sm:pt-16">
+        <p class="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-haze">Portfolio design reference</p>
+        <h1 class="text-4xl font-bold tracking-tight text-mist sm:text-5xl">{title}</h1>
+        <p class="mt-4 text-lg leading-relaxed text-haze">{description}</p>
+      </header>
+      <slot />
+    </main>
+    <footer class="mt-12 border-t border-line pt-6 text-sm text-haze">Jan Pomer · Style guidelines</footer>
+  </div>
+</Layout>
+
+<style>
+  .guide :global(a:focus-visible), .guide :global(button:focus-visible) {
+    outline: 2px solid var(--color-mist);
+    outline-offset: 5px;
+  }
+  .skip-link { position: absolute; top: 0.5rem; left: 1.5rem; transform: translateY(-200%); background: var(--color-surface); color: var(--color-mist); padding: 0.75rem; z-index: 60; }
+  .skip-link:focus { transform: none; }
+  .guide :global(code) { overflow-wrap: anywhere; }
+  @media (prefers-reduced-motion: reduce) {
+    .guide :global(*) { transition: none !important; }
+  }
+</style>
