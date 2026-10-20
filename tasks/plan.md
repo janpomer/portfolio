@@ -37,8 +37,8 @@ Add three directly accessible guideline pages documenting the portfolio's existi
 
 ### Phase 3: Verification and handoff
 
-- [ ] Task 4: Verify access, responsiveness, and public-page regressions.
-- [ ] Checkpoint: All acceptance criteria met and ready for review.
+- [x] Task 4: Verify access, responsiveness, and public-page regressions.
+- [x] Checkpoint: All acceptance criteria met and ready for review; verification limits recorded in todo.md.
 
 Detailed acceptance criteria and verification commands are in `tasks/todo.md`.
 
@@ -77,4 +77,18 @@ Implemented the fonts route and shared guideline shell. See `todo.md` for the ve
 
 ## Task 2 Handoff
 
-Palette page implemented at `/style-guide/colors/` (default preview `/portfolio/style-guide/colors/`). Added guide-only navigation and a reusable swatch component; public navigation and tokens are unchanged. Review checkpoint reached after Tasks 1–2. Components are next after checkpoint review. See the checklist for verification and the remaining JavaScript-disabled browser audit.
+Palette page implemented at `/style-guide/colors/` (default preview `/portfolio/style-guide/colors/`). Added guide-only navigation and a reusable swatch component; public navigation and tokens are unchanged. Review checkpoint reached after Tasks 1–2. Components are next after checkpoint review. See the checklist for verification; script-free rendering was subsequently verified with a temporary CSP preview.
+
+## Completed routes and maintenance
+
+| Purpose | Root deployment | Default project deployment |
+|---|---|---|
+| Fonts | `/style-guide/` | `/portfolio/style-guide/` |
+| Colors | `/style-guide/colors/` | `/portfolio/style-guide/colors/` |
+| Components | `/style-guide/components/` | `/portfolio/style-guide/components/` |
+
+These routes have guide-only navigation and `noindex, nofollow` metadata. Public pages have no inbound links. No authentication is provided.
+
+Keep palette definitions in `src/styles/global.css`; the color page reads token values at build time. Typography specimens follow existing utility classes. Component specimens live under `src/components/style-guide/` with references to their public source patterns; update specimens when those patterns change. The guideline layout controls internal links. See `tasks/todo.md` for the complete verification record and tool limitations.
+
+Final state: all planned pages implemented and verified, default build restored, ready for user review. Local commits only.

@@ -96,16 +96,16 @@
 **Description:** Complete meaningful route/link regression checks, verify both deployment base paths, inspect the UI in a real browser, and record the guide URLs and maintenance notes in the planning documents.
 
 **Acceptance criteria:**
-- [ ] All three routes load directly and link to each other under default `/portfolio/` and root `/` deployments, with valid assets and no missing routes.
-- [ ] Generated public HTML has no inbound guide links; all guide pages have indexing directives, public pages retain existing metadata, and no sitemap advertises the guide.
-- [ ] Home, CV, and enabled blog routes retain their existing behavior; the guide passes mobile/desktop, light/dark, keyboard, reduced-motion, and no-JavaScript checks with no new console errors.
+- [x] All three routes load directly and link to each other under default `/portfolio/` and root `/` deployments, with valid assets and no missing routes.
+- [x] Generated public HTML has no inbound guide links; all guide pages have indexing directives, public pages retain existing metadata, and no sitemap advertises the guide.
+- [x] Home, CV, and enabled blog routes retain their existing behavior; the guide passes mobile/desktop, light/dark, keyboard, reduced-motion, and no-JavaScript checks with no new console errors.
 
 **Verification:**
-- [ ] RED then GREEN: extend the generated-HTML test to cover base-aware links and public-page isolation before correcting any gaps; run it against each build below. Derive the expected base from `BASE_PATH` (default `/portfolio`).
-- [ ] Default deployment: `pnpm build && node --test tests/style-guide.test.mjs`.
-- [ ] Root deployment: `BASE_PATH=/ pnpm build && BASE_PATH=/ node --test tests/style-guide.test.mjs`.
-- [ ] Restore default local output after verification: `pnpm build`.
-- [ ] Manual check: preview each build before replacing it; inspect direct routes and representative public pages at 375px and 1440px, with dark/light and browser accessibility settings. Record results and any limitations.
+- [x] Extend generated-HTML assertions for all route links, active-page indicators, assets, public-page isolation, script-free specimen visibility, and reduced-motion CSS. No behavior fixes were needed in Task 4; these assertions passed against the completed gallery. The gallery route itself was verified RED → GREEN in Task 3. Expected base comes from `BASE_PATH` (default `/portfolio`).
+- [x] Default deployment: `pnpm build && node --test tests/style-guide.test.mjs`.
+- [x] Root deployment: `BASE_PATH=/ pnpm build && BASE_PATH=/ node --test tests/style-guide.test.mjs`.
+- [x] Restore default local output after verification: `pnpm build`.
+- [x] Manual check: preview each build before replacing it; inspect direct routes and representative public pages at 375px and 1440px, with dark/light and browser accessibility settings. Record results and any limitations.
 
 **Dependencies:** Tasks 1–3.
 
@@ -118,7 +118,18 @@
 
 ## Checkpoint: Complete
 
-- [ ] All acceptance criteria satisfied and verification results recorded.
-- [ ] No existing unrelated staged changes modified or unstaged.
-- [ ] Known URLs and maintenance sources recorded in `tasks/plan.md`.
-- [ ] Ready for human review; no deployment or publication performed.
+- [x] All acceptance criteria satisfied and verification results recorded.
+- [x] No existing unrelated staged changes modified or unstaged.
+- [x] Known URLs and maintenance sources recorded in `tasks/plan.md`.
+- [x] Ready for human review; no deployment or publication performed.
+
+## Final verification record (2026-10-20)
+
+- All six tests pass on root and default builds with `node --test --test-isolation=none tests/style-guide.test.mjs`; builds use `node node_modules/astro/astro.js build`, the README’s fallback for the local pnpm database error. Root builds use `BASE_PATH=/` for both commands. Default output restored last.
+- Browser checked direct guide routes and navigation, current-page indicator, loaded image assets, light/dark rendering, theme persistence, local specimen links, and keyboard activation/focus. Gallery verified at 375px and 1440px with no horizontal overflow.
+- Root and default home/CV routes load, the CV print control remains present, and no home-page links enter the guide. Blog remains disabled by the existing feature flag, so there are no enabled blog routes to exercise. No sitemap is emitted.
+- Normal browser previews report no errors/warnings. Node emits an existing toolchain `module.register()` deprecation warning; compilation succeeds.
+- Script-free rendering was verified with CSP `script-src 'none'` on a temporary local-only preview: theme initialization did not execute, section-heading opacity is 1, navigation works, and all 21 palette swatches render correctly. This tests blocked script execution, not the browser’s JavaScript setting or noscript-element activation. Temporary verification servers stopped.
+- Reduced-motion animation/transition disabling is verified in generated CSS. The browser tool does not expose OS reduced-motion emulation, so that preference was not toggled at runtime.
+- `git diff --check` passes. No lint/type-check scripts exist. The structure checker reports the pre-existing `src/utils` folder only; no new size violations or unrelated restructuring.
+- Gallery commit: `61dc1ca Add portfolio component guideline gallery`. Final verification is recorded in a separate documentation commit. No deployment or push.
