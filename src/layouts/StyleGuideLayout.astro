@@ -4,6 +4,10 @@ import { withBase } from "../utils/url";
 
 interface Props { title: string; description: string; }
 const { title, description } = Astro.props;
+const pages = [
+  { label: "01 · Fonts", path: "/style-guide/" },
+  { label: "02 · Colors", path: "/style-guide/colors/" },
+];
 ---
 
 <Layout title={`${title} — Style guidelines`} description={description} noindex>
@@ -17,8 +21,10 @@ const { title, description } = Astro.props;
         </button>
       </div>
       <nav aria-label="Style guidelines" class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm">
-        <a href={withBase("/style-guide/")} aria-current="page" class="font-semibold text-mist underline decoration-accent decoration-2 underline-offset-8">01 · Fonts</a>
-        <span class="text-haze">02 · Colors <small>(Coming next)</small></span>
+        {pages.map((page) => {
+          const current = Astro.url.pathname.replace(/\/$/, "") === withBase(page.path).replace(/\/$/, "");
+          return <a href={withBase(page.path)} aria-current={current ? "page" : undefined} class:list={["text-mist hover:underline underline-offset-8", current && "font-semibold underline decoration-accent decoration-2"]}>{page.label}</a>;
+        })}
         <span class="text-haze">03 · Components <small>(Coming next)</small></span>
       </nav>
     </header>

@@ -31,8 +31,8 @@ Add three directly accessible guideline pages documenting the portfolio's existi
 
 ### Phase 2: Palette and components
 
-- [ ] Task 2: Add the light/dark palette page.
-- [ ] Checkpoint: Verify routes, themes, and absence of public links after Tasks 1–2.
+- [x] Task 2: Add the light/dark palette page (JavaScript-disabled browser audit remains for final verification).
+- [x] Checkpoint: Verify routes, themes, and absence of public links after Tasks 1–2; awaiting human review.
 - [ ] Task 3: Add the component gallery.
 
 ### Phase 3: Verification and handoff
@@ -73,4 +73,8 @@ Task 1 → Task 2 → checkpoint → Task 3 → Task 4 → final checkpoint. Pal
 
 ## Task 1 Handoff
 
-Implemented the fonts route and shared guideline shell. See `todo.md` for the verification record. Proposed commit: `Add unlisted typography style guidelines`. No commit was requested or made. Paused at the first commit point under the invoked incremental-implementation skill; Task 2 is next.
+Implemented the fonts route and shared guideline shell. See `todo.md` for the verification record. Committed as `261f3be` after the user requested commit and continue and confirmed committing directly to main. Versioning guide followed; user identity preserved; no push.
+
+## Task 2 Handoff
+
+Palette page implemented at `/style-guide/colors/` (default preview `/portfolio/style-guide/colors/`). Added guide-only navigation and a reusable swatch component; public navigation and tokens are unchanged. Review checkpoint reached after Tasks 1–2. Components are next after checkpoint review. See the checklist for verification and the remaining JavaScript-disabled browser audit.

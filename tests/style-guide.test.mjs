@@ -43,3 +43,24 @@ test('public pages neither link to guidelines nor inherit their indexing directi
     assert.doesNotMatch(html, /<meta name="robots" content="noindex, nofollow"/, path);
   }
 });
+
+test('colors route documents both themes and links only to implemented guide pages', async () => {
+  const html = await readFile('dist/style-guide/colors/index.html', 'utf8');
+  assert.match(html, /<meta name="robots" content="noindex, nofollow"/);
+  assert.match(html, /data-theme="light"/);
+  assert.match(html, /data-theme="dark"/);
+  for (const token of ['primary', 'secondary', 'accent', 'ink', 'surface', 'haze', 'mist', 'line', 'veil']) {
+    assert.ok(html.includes(`--color-${token}`), `Missing color ${token}`);
+  }
+  for (const token of ['--img-fade', '--glow-a', '--glow-b']) {
+    assert.ok(html.includes(token), `Missing effect ${token}`);
+  }
+  assert.match(html, /rgba\(/);
+  assert.match(html, /Contrast/);
+  for (const path of ['dist/style-guide/index.html', 'dist/style-guide/colors/index.html']) {
+    const page = await readFile(path, 'utf8');
+    assert.ok(page.includes(`href="${guidePath}"`));
+    assert.ok(page.includes(`href="${guidePath}colors/"`));
+    assert.doesNotMatch(page, /href="[^" ]*\/components\//);
+  }
+});

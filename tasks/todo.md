@@ -33,14 +33,15 @@
 **Description:** Deliver `/style-guide/colors/` with named brand swatches and paired theme samples that reflect existing CSS tokens.
 
 **Acceptance criteria:**
-- [ ] Show all brand, semantic, image-fade, and glow tokens with variable names, resolved values including alpha, and practical usage notes.
-- [ ] Light and dark theme samples remain visible together and match `global.css`; toggling the page theme does not change the identity of either sample.
-- [ ] Each swatch has a readable text label and value; transparent tokens use a representative surface and narrow screens have no horizontal page overflow.
+- [x] Show all brand, semantic, image-fade, and glow tokens with variable names, resolved values including alpha, and practical usage notes.
+- [x] Light and dark theme samples remain visible together and match `global.css`; toggling the page theme does not change the identity of either sample.
+- [x] Each swatch has a readable text label and value; transparent tokens use a representative surface and narrow screens have no horizontal page overflow.
 
 **Verification:**
-- [ ] RED then GREEN: extend route/content assertions before implementation; run `pnpm build && node --test tests/style-guide.test.mjs`.
-- [ ] Build succeeds: `pnpm build`.
-- [ ] Manual check: compare displayed values with browser computed styles, inspect both themes with and without JavaScript, and measure contrast for documented text/background combinations.
+- [x] RED then GREEN: extend route/content assertions before implementation; run `pnpm build && node --test tests/style-guide.test.mjs`.
+- [x] Build succeeds: `pnpm build`.
+- [x] Manual check: compare displayed values with browser computed styles, inspect both themes, and measure contrast for documented text/background combinations.
+- [ ] Browser check with JavaScript explicitly disabled (deferred to final verification; all swatches and labels are statically rendered and have no script dependency).
 
 **Dependencies:** Task 1.
 
@@ -51,12 +52,16 @@
 
 **Estimated scope:** Medium: 3 files.
 
+**Verification record (2026-10-20):** Colors route test failed first because its output was absent. Build and all three generated-HTML checks now pass with the installed Astro CLI and in-process Node runner. Printed labels match the source tokens, and browser computed styles confirmed light ink `rgb(238, 243, 249)` and dark ink `rgb(5, 17, 36)` before and after switching the surrounding theme. Theme selection persisted across reload and Fonts → Colors navigation. No page overflow at 375px or 1440px; browser console reported no errors/warnings. Solid-color contrast was calculated from the existing CSS using sRGB relative luminance and recorded on the page. Swatches and labels are complete in emitted HTML/CSS; JavaScript-disabled browser verification remains outstanding. Structure checker still reports only pre-existing `src/utils`; `git diff --check` passes.
+
+**Commit message:** `Add light and dark palette guidelines`
+
 ## Checkpoint: After Tasks 1–2
 
-- [ ] `pnpm build && node --test tests/style-guide.test.mjs` passes.
-- [ ] Both routes load directly with working guide-only navigation.
-- [ ] Fonts and colors remain readable in both themes at 375px and 1440px widths.
-- [ ] Generated public pages have no links into `/style-guide/`.
+- [x] `pnpm build && node --test tests/style-guide.test.mjs` passes.
+- [x] Both routes load directly with working guide-only navigation.
+- [x] Fonts and colors remain readable in both themes at 375px and 1440px widths.
+- [x] Generated public pages have no links into `/style-guide/`.
 
 ## Task 3: Add the component gallery
 

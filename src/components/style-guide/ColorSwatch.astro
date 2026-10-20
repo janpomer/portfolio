@@ -1,0 +1,24 @@
+---
+interface Props { name: string; variable: string; value: string; usage: string; }
+const { name, variable, value, usage } = Astro.props;
+---
+
+<li class="swatch">
+  <div class="preview" aria-hidden="true"><div style={`background:var(${variable})`}></div></div>
+  <div class="description">
+    <h4>{name}</h4>
+    <code>{variable}</code>
+    <p class="value">{value}</p>
+    <p>{usage}</p>
+  </div>
+</li>
+
+<style>
+  .swatch { display: grid; grid-template-columns: 4rem minmax(0, 1fr); gap: 1rem; padding: 1.25rem 0; border-top: 1px solid var(--c-line); }
+  .preview { height: 4rem; background: var(--c-surface); border: 1px solid var(--c-line); border-radius: 0.5rem; overflow: hidden; }
+  .preview > div { height: 100%; }
+  h4 { color: var(--c-mist); font-weight: 600; }
+  .description { min-width: 0; font-size: 0.875rem; line-height: 1.625; }
+  code { display: block; color: var(--c-mist); font-size: 0.75rem; }
+  .value { font-family: var(--font-mono); font-size: 0.75rem; margin-bottom: 0.25rem; overflow-wrap: anywhere; }
+</style>
