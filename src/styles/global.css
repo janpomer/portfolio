@@ -130,6 +130,7 @@ body::before {
  * no border width/colour flash on the transition.                     *
  * ------------------------------------------------------------------ */
 [data-nav] {
+  background-color: var(--color-ink);
   border-bottom: 1px solid transparent;
   transition:
     background-color 0.3s ease,
@@ -137,12 +138,16 @@ body::before {
     box-shadow 0.3s ease,
     backdrop-filter 0.3s ease;
 }
+@supports ((backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px))) {
+  [data-nav] {
+    background-color: color-mix(in srgb, var(--color-ink) 95%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
 [data-nav].nav-scrolled {
-  background-color: color-mix(in srgb, var(--color-ink) 80%, transparent);
   border-bottom-color: var(--color-line);
   box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 }
 
 /* ------------------------------------------------------------------ *
