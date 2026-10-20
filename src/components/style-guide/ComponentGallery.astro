@@ -1,0 +1,49 @@
+---
+import ComponentSpecimen from "./ComponentSpecimen.astro";
+import SectionHeading from "../SectionHeading.astro";
+import TechIcon from "../TechIcon.astro";
+import { projects } from "../../data/projects";
+import { withBase } from "../../utils/url";
+const project = projects[0];
+---
+
+<div class="component-gallery" data-component-gallery>
+  <p class="mb-8 max-w-3xl text-sm leading-relaxed">Live examples follow the public portfolio. Hover or tab to interactive controls to inspect their states. All specimen links stay on this page; theme controls change the shared page theme. See the Colors page for existing contrast limitations.</p>
+  <ComponentSpecimen id="actions" title="Actions" source="Hero.astro · Nav.astro" guidance="Use one filled action for the primary step, an outlined action for a secondary step, and underlined links within copy. Hover changes fill or border; keyboard focus adds an outline.">
+    <div class="flex flex-wrap gap-4">
+      <a href="#action-note" class="inline-flex items-center rounded-full bg-accent px-7 py-3.5 text-base font-semibold text-white shadow-xl shadow-accent/25 transition hover:-translate-y-0.5 hover:bg-accent/90">Primary action <span class="ml-2" aria-hidden="true">→</span></a>
+      <a href="#project-card" class="inline-flex items-center rounded-full border border-line px-7 py-3.5 text-base font-semibold text-mist transition hover:border-accent/50 hover:bg-veil">Secondary action</a>
+    </div>
+    <div id="action-note" class="post-body mt-6"><p>These demonstration links move to local examples. <a href="#prose">Read the prose example</a>.</p></div>
+  </ComponentSpecimen>
+  <ComponentSpecimen id="theme-control" title="Theme toggle" source="Nav.astro · Layout.astro · global.css" guidance="An icon button with an accessible label. Sun offers light mode; moon offers dark mode. The choice persists across guide pages and reloads. Requires JavaScript.">
+    <button type="button" aria-label="Toggle specimen color theme" data-theme-toggle class="grid h-9 w-9 place-items-center rounded-full text-haze ring-1 ring-line transition hover:bg-veil hover:text-mist">
+      <svg class="theme-icon-sun h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5" /></svg>
+      <svg class="theme-icon-moon h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+    </button>
+    <noscript><p class="mt-3 text-sm">Theme switching needs JavaScript. The page follows your system theme.</p></noscript>
+  </ComponentSpecimen>
+  <ComponentSpecimen id="availability" title="Availability badge" source="Hero.astro" guidance="A compact status label with a dot and explicit text. This is informational, not a button. Reduced-motion mode stops the pulse.">
+    <p class="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-xs font-medium tracking-wide text-accent"><span class="relative flex h-2 w-2 shrink-0" aria-hidden="true"><span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-accent"></span></span>Available for select architecture &amp; lead engagements</p>
+  </ComponentSpecimen>
+  <ComponentSpecimen id="project-card" title="Project card & tags" source="Projects.astro · src/data/projects.ts" guidance="A 16:9 image, concise description, and pill tags. Linked cards lift and zoom on hover; unlinked cards remain informational. This specimen links to a local note.">
+    <a href="#project-note" class="group block overflow-hidden rounded-2xl border border-line bg-surface/40 transition duration-300 hover:-translate-y-1 hover:border-accent/30 hover:bg-surface/70 hover:shadow-2xl hover:shadow-black/30">
+      <div class="relative aspect-[16/9] overflow-hidden bg-primary"><img src={withBase(project.image)} alt={`${project.title} preview`} width="960" height="540" loading="lazy" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" /><div class="absolute inset-0 bg-[linear-gradient(to_top,var(--img-fade),transparent)]"></div></div>
+      <div class="p-6"><h3 class="text-lg font-semibold text-mist">{project.title}</h3><p class="mt-2 text-sm leading-relaxed">{project.description}</p><ul class="mt-4 flex flex-wrap gap-2">{project.tags.map(tag => <li class="rounded-full bg-accent/10 px-2.5 py-1 text-xs font-medium text-accent ring-1 ring-inset ring-accent/20">{tag}</li>)}</ul></div>
+    </a>
+    <p id="project-note" class="mt-4 text-sm leading-relaxed">Demonstration card: selecting it stays here. Tags describe the project and are not filters.</p>
+  </ComponentSpecimen>
+  <ComponentSpecimen id="tech-tile" title="Tech tile" source="Stack.astro · TechIcon.astro" guidance="A centered icon and text label with a subtle hover lift. Tiles describe the stack; they are not interactive controls and do not enter the tab order.">
+    <div class="group flex max-w-48 flex-col items-center gap-3 rounded-2xl border border-line bg-surface/40 p-6 text-center transition duration-300 hover:-translate-y-1 hover:border-accent/30 hover:bg-surface/70"><span class="text-accent transition-transform duration-300 group-hover:scale-110"><TechIcon name="java" /></span><h3 class="text-sm font-semibold text-mist">Java</h3></div>
+  </ComponentSpecimen>
+  <ComponentSpecimen id="section-heading" title="Section heading" source="SectionHeading.astro" guidance="A short uppercase eyebrow and a responsive section title. Reuses the actual shared component. The specimen stays visible without scroll animation.">
+    <SectionHeading eyebrow="Selected work" title="Projects" />
+  </ComponentSpecimen>
+  <ComponentSpecimen id="prose" title="Prose" source="global.css · .post-body" guidance="Long-form text uses a 1.75 line height, underlined links, lists, quotes, and code. Keep lines comfortable to scan and use semantic markup.">
+    <div class="post-body"><p>Start with <strong>clear boundaries</strong> and use <code>--color-mist</code> for emphasis. <a href="#actions">Review action patterns</a>.</p><ul><li>Write concise, descriptive labels.</li><li>Use lists for parallel ideas.</li></ul><blockquote>Make the important details easy to find.</blockquote><pre><code>color: var(--color-mist);</code></pre></div>
+  </ComponentSpecimen>
+</div>
+
+<style>
+  .component-gallery :global([data-reveal]) { opacity: 1; transform: none; transition: none; }
+</style>

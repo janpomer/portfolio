@@ -41,7 +41,7 @@
 - [x] RED then GREEN: extend route/content assertions before implementation; run `pnpm build && node --test tests/style-guide.test.mjs`.
 - [x] Build succeeds: `pnpm build`.
 - [x] Manual check: compare displayed values with browser computed styles, inspect both themes, and measure contrast for documented text/background combinations.
-- [ ] Browser check with JavaScript explicitly disabled (deferred to final verification; all swatches and labels are statically rendered and have no script dependency).
+- [x] Browser check with script execution blocked by CSP on a temporary preview; all 21 swatches and both theme panels render with no theme initialization script executed. This verifies script-free rendering rather than toggling the browser’s JavaScript setting.
 
 **Dependencies:** Task 1.
 
@@ -68,14 +68,14 @@
 **Description:** Deliver `/style-guide/components/` with compact specimens of the UI patterns already used by the portfolio, alongside purpose, source, and state guidance.
 
 **Acceptance criteria:**
-- [ ] Include primary/secondary actions, text links, theme toggle, availability badge, project tags/card, tech tile, section heading, and prose styling; source references identify the existing implementation.
-- [ ] Show applicable default, hover, and keyboard-focus states with concise usage guidance; specimens work locally without mail, downloads, or unrelated external navigation.
-- [ ] Samples match the portfolio in both themes and adapt to mobile; reduced-motion settings preserve readability and usable controls.
+- [x] Include primary/secondary actions, text links, theme toggle, availability badge, project tags/card, tech tile, section heading, and prose styling; source references identify the existing implementation.
+- [x] Show applicable default, hover, and keyboard-focus states with concise usage guidance; specimens work locally without mail, downloads, or unrelated external navigation.
+- [x] Samples match the portfolio in both themes and adapt to mobile; reduced-motion settings preserve readability and usable controls.
 
 **Verification:**
-- [ ] RED then GREEN: add gallery route/section assertions first; run `pnpm build && node --test tests/style-guide.test.mjs`.
-- [ ] Build succeeds: `pnpm build`.
-- [ ] Manual check: exercise specimen interactions, hover/focus states, keyboard navigation, theme persistence, reduced motion, and no-JavaScript rendering.
+- [x] RED then GREEN: add gallery route/section assertions first; run `pnpm build && node --test tests/style-guide.test.mjs`.
+- [x] Build succeeds: `pnpm build`.
+- [x] Manual check: exercise specimen interactions, hover/focus states, keyboard navigation, theme persistence, reduced motion, and no-JavaScript rendering.
 
 **Dependencies:** Tasks 1–2.
 
@@ -86,6 +86,10 @@
 - `tests/style-guide.test.mjs`
 
 **Estimated scope:** Medium: 4 files.
+
+**Verification record (2026-10-20):** Gallery route assertion failed before implementation, then passed after the route and specimens were added. Build and all six current regression checks pass. Browser verified light/dark rendering, local primary-action navigation, keyboard focus outline, keyboard theme switching, project image loading, and a clean normal-preview console. A temporary preview with CSP `script-src 'none'` confirmed no app scripts execute (`data-theme` is absent), while the reused section heading is visible at opacity 1 and guide navigation works. The palette remains complete with all 21 swatches and both theme backgrounds. Reduced-motion rules are checked in generated CSS; OS-level preference emulation is not exposed by the browser tool.
+
+**Commit message:** `Add portfolio component guideline gallery`
 
 ## Task 4: Verify access and public-page regressions
 

@@ -7,6 +7,7 @@ const { title, description } = Astro.props;
 const pages = [
   { label: "01 · Fonts", path: "/style-guide/" },
   { label: "02 · Colors", path: "/style-guide/colors/" },
+  { label: "03 · Components", path: "/style-guide/components/" },
 ];
 ---
 
@@ -25,7 +26,6 @@ const pages = [
           const current = Astro.url.pathname.replace(/\/$/, "") === withBase(page.path).replace(/\/$/, "");
           return <a href={withBase(page.path)} aria-current={current ? "page" : undefined} class:list={["text-mist hover:underline underline-offset-8", current && "font-semibold underline decoration-accent decoration-2"]}>{page.label}</a>;
         })}
-        <span class="text-haze">03 · Components <small>(Coming next)</small></span>
       </nav>
     </header>
     <main id="guide-content" tabindex="-1">
@@ -49,6 +49,6 @@ const pages = [
   .skip-link:focus { transform: none; }
   .guide :global(code) { overflow-wrap: anywhere; }
   @media (prefers-reduced-motion: reduce) {
-    .guide :global(*) { transition: none !important; }
+    .guide :global(*) { transition: none !important; animation: none !important; }
   }
 </style>

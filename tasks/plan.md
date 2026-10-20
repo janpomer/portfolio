@@ -31,9 +31,9 @@ Add three directly accessible guideline pages documenting the portfolio's existi
 
 ### Phase 2: Palette and components
 
-- [x] Task 2: Add the light/dark palette page (JavaScript-disabled browser audit remains for final verification).
+- [x] Task 2: Add the light/dark palette page (script-free rendering verified with CSP).
 - [x] Checkpoint: Verify routes, themes, and absence of public links after Tasks 1–2; awaiting human review.
-- [ ] Task 3: Add the component gallery.
+- [x] Task 3: Add the component gallery.
 
 ### Phase 3: Verification and handoff
 
